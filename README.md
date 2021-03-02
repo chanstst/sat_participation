@@ -52,7 +52,7 @@ Using the function "describe" and sort by values in various fields to get a sens
 - Possible explanation based on public sources: contracts between states with SAT/ACT to provide the one of the tests to students; majority of students take one test only
 - Used the library Plotly to do a choropleth map - SAT is dominant in coastal areas
 
-<img src="images/Picture1.jpg" alt="map" width="60%">
+<img src="images/Picture1.jpg" alt="map" width="80%">
 
 Figure 1: SAT participation by State
 
