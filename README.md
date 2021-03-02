@@ -1,230 +1,86 @@
-# Image Classification for Property Tech
-
-Capstone Project for General Assembly Data Science Immersive (DSI 19 Singapore), Feb 2021
-
-## Problem Statement
-London is one of the world's most interesting property market, due to its long history, its prominent status as a international financial center, as well as the mix of modern and period buildings.
-For property buyers or investors, there is one crucial piece of information not easy to obtain in the public domain:
-- **Age of Building**, or simply categorised as **Period/Old vs Modern**
-
-As a result, most buyers spend a great deal of time in property search, and receive poor recommendations from auto-generated emails.
-
-This project aims at filling the information gap
-by classifying buildings as Period vs Modern, based on 2000+ images from leading portals (Rightmove, Zoopla, Purple Bricks)
-
-Results: metrics >90% (AUC, accuracy)
-
-## Datasets
-- 3000+ images from public portals eg Rightmove, Zoopla, PurpleBricks
-- 2000+ labels done manually
-
-Link to all images in Google Drive [here](https://drive.google.com/drive/folders/1d39ZSjKYY07WGX62vmVFfqE0vXFbVuuM?usp=sharing)
-
-#### Features to extract
-- Period vs Modern (primary goal)
-- Exterior vs Interior (secondary, which turns out to be crucial)
-
-<img src="graphics/features_extracted.jpg" alt="other_challenges" width="60%">
-
-Figure 1: (from top left to bottom right): Period Exterior, Period Interior, Modern Exterior, Modern Interior
+# General Assembly Project 1: SAT vs ACT
 
 
-#### Challenges with the images
-Several issues were found out in the initial data exploration and analysis stage
-- Various exterior styles: period buildings include Georgian (1714-1837), Victorian (1837-1901), Edwardian (1901-1910), council houses, old houses, terraced or detached houses
+### Overview
 
-<img src="graphics/exterior_styles.jpg" alt="other_challenges" width="90%">
-Figure 2: Various exterior styles of London period buildings
+My first project in General Assembly Data Science Immersion to work on a set of data on US standard examinations (SAT and ACT). The primary objective is to present new ideas to the executives of College Board, the organisation that administers SAT):
 
-Other issues:
-- Refurnished interior: period buildings are well maintained, making it difficult to distinguish it from the modern ones
-- Retro: some modern buildings are designed in a retro styles
-- Other challenges include blocked views, watermarks and repeated images
-
-<img src="graphics/other_challenges.jpg" alt="other_challenges" width="90%">
-Figure 3: Other challenges include refurnished interior (left), retro buildings (centre), blocked views (right)
-
-## Divide and Conquer Strategy
-The ultimate goal is to classify period vs modern buildings. However, during the data exploration and labelling, it became apparent that there is limitation on accuracy based on interior images
-Sometimes classification may not be accurate even by human eyes.
-
-<img src="graphics/divide_n_conquer.jpg" alt="divide_n-conquer" width="40%">
-Figure 4: Focused on analysing a subset of data (Exterior Period vs Exterior Modern) to boost performance
+Based on the given data and external research, I am tasked to make recommendations about how the College Board might work to increase the participation rate in a state chosen by me.
 
 
-#### Strategy adopted: Divide and Conquer ####
-- Separate “good” images from the pool ie identify “exterior” images as they tend to give more information
-- Feed through two layers of classification models
-- 1st layer model for classifying exterior vs interior. A customised CNN model is able to learn how to classify this effectively (AUC and accuracy > 95%)
-- 2nd layer model for classifying period vs modern, based on exterior images only. Empirically, transfer learning performs much better than customised CNN (AUC and accuracy 90%+ vs 70-80%)
+---
+
+### Datasets
+
+#### Provided Data
+Two datasets were given as the basis:
+- 2017 and 2018 SAT Scores
+- 2017 and 2018 ACT Scores
+
+#### In addition, I sourced from public sources the below datasets:
+- Estimated Population 2017
+- Median Household Income 2017
+
+---
+
+### Problem Statement
+Identify a state for College Board to focus on improving participation rate, based on internal and external data
+
+---
+
+### Data Import and Cleaning
+The given datasets for 2017 and 2018 were largely clean. Standard cleaning includes
+- tidying up column names ie changing strings to lower cases, and removing spaces
+- converting the numbers in strings to float
+- removing the row of national average (ACT data)
+- rectifying an erroneous number (Maryland, Math, SAT 2017)
+- merging the datasets of both exams in 2017 and 2018
+
+---
+
+### Exploratory Data Analysis
+Using the function "describe" and sort by values in various fields to get a sense of data
+- One initial finding eg states with lowest SAT participation rate have highest ACT participation rate, and vice versa
+
+---
+
+### Data Visualization
+#### Output - Participation Rate
+- Participation rate (by state) is the only output of the analysis, so the first few steps is to understand this field
+- Standard steps are taken eg histogram of participation rates, SAT vs ACT comparison, year on year changes
+- In most states, participation rates are geared towards 0 or 100%
+- Possible explanation based on public sources: contracts between states with SAT/ACT to provide the one of the tests to students; majority of students take one test only
+- Used the library Plotly to do a choropleth map - SAT is dominant in coastal areas
+
+#### Other Fields
+- Another important fields, among others, are students overall scores, ie SAT Total or ACT Composite
+- When analysing the distribution of SAT Total / ACT Composite, two normal distributions are noticed
+- Scatter plot of scores vs participation rates show that there seem to be two subsets of data due to higher and lower participation. The same patterns are seen across SAT/ACT, overall scores and subject scores, in 2017 and 2018
+- One interesting relationship is found - overall scores vs participation rate - a strong negative correlation ie lower overall scores for higher participation rates
+- Possible explanation based on public sources: only stronger students will take an additional test on top of the requirement/provision by the state
+
+---
+
+### Descriptive and inferential Statistics
+Potentially more inferential statistical analysis could be done with a larger dataset of the same nature.
+For this project, there are only 51 data points in each field, and it seems that there are two subsets (by low/high participation rates), so no further inferential statistical analysis was conducted
+
+---
+
+### Outside Research
+#### Demographic data
+Demographic data is important to business decision making, hence two new datasets were sourced:
+- Population by state
+- Median household income by state
 
 
-## Data Extraction and Analysis
+---
 
-Web scrapping of the major property portals in UK
-- Rightmove
-- Zoopla
-- PurpleBricks
-
-A total of 2232 images were obtained, alongside information below:
-- Location information eg coordinates
-- Description
-
-Analysis
-- 2100 unique images, 132 duplicated images
-- Among the unique images, 609 exterior images, 1491 interior images
-- Among the unique images, 1085 images of new buildings, 1015 period buildings
-
-Manual labelling
-- Basic key word search eg Georgian , Victorian etc to do first level of labelling
-- Glancing through the images as second level of labelling 
-
-## Data Preprocessing
-- Image hashing, using the library [ImageHash](https://github.com/JohannesBuchner/imagehash)
-- Resizing
-- Standard Scaling
+### Conclusions and Recommendations
+#### Florida - the state of choice
+Reasons are:
+- Significant drop in SAT participation to recover
+- Room to improve overall scores eg via pre-testing support
+- It is one of the most populous states (top 3)
 
 
-## Modelling
-Two Convolutional Neural Network (CNN) models were used:
-- Customised CNN
-- Transfer learning based on VGG16 (the seminal paper at this [link](https://arxiv.org/abs/1409.1556))
-
-
-## Overall process
-<img src="graphics/overall_process.jpg" alt="overall_process">
-Figure 5: Overall process of Data Preprocessing and Modelling
-
-
-
-## Models for two layers
-
-### First Layer - Customised Convolutional Neural Networks (CNN)
-#### Customised structure
-- Two convolutional layers with 6 and 16 filters respectively, each followed by a max pooling layer of 9x9
-- One flattening layer
-- One layer of 256 densely connected neurons
-- One dropout layer, dropout rate 0.5
-- Final Sigmoid activation layer
-- Optimizer: Adam
-
-Grid Search CV was applied to determine the best parameters
-Faster computation in each iteration, but more iterations needed
-
-### Second Layer - Transfer Learning based on VGG16
-#### VGG16 as the input model
-- No change in the original VGG16 structure and parameters
-- One additional layer of 128 densely connected neurons
-- One dropout layer, dropout rate 0.5
-- Final Sigmoid activation layer
-
-Quicker in convergence, less than 15 epochs based on the tolerance
-Longer computation in each iteration due to many more layers
-
-
-## Model performance
-#### Customised CNN
-- Classified images into exterior vs interior very effectively
-- AUC: 99%
-- Accuracy: 95% (238/250 in validation set), vs baseline at 50% (balanced class)
-- Data set of 1000 images, 500 each class (Exterior vs Interior)
-- [<u><ins>Notebook</ins></u>](code/eda_model7d.ipynb)
-
-<img src="graphics/Model7d_ROC.png" alt="cnn">
-Figure 6: ROC of Customised CNN in the first layer of classification (interior vs exterior)
-
-#### Images classified as Interior
-<img src="graphics/classified_interior.jpg" alt="interior">
-Figure 7: Selected images classified as Interior
-
-#### Images classified as Exterior
-<img src="graphics/classified_exterior.jpg" alt="exterior">
-Figure 8: Selected images classified as Exterior
-
-#### Transfer Learning CNN (VGG16)
-- Classified exterior images into period vs modern very effectively
-- AUC: 96%
-- Accuracy: 88% (123/140 in validation set), vs baseline at 50% (balanced class)
-- Data set of 560 images, 280 each class (Period vs Modern)
-- [<u><ins>Notebook</ins></u>](colab/vgg16c.ipynb)
-
-<img src="graphics/VGG16c_ROC.png" alt="vgg">
-Figure 9: ROC of Transfer Learning CNN (VGG16) in the second layer of classification (period vs modern)
-
-#### Images classified as Period/Old
-<img src="graphics/classified_period.jpg" alt="period">
-Figure 10: Selected images classified as Period/Old
-
-#### Images classified as Modern/New
-<img src="graphics/classified_modern.jpg" alt="modern">
-Figure 11: Selected images classified as Modern/New
-
-
-#### Model Comparison
-- Transfer Learning CNN is superior to the customised CNN in dealing with exterior vs interior
-- AUC was improved to ~95% from ~80%
-
-#### Why divide and conquer?
-- The metric dropped to mediocre levels (70-80%) if all exterior and interior images are used for classification
-- That will limit the commercialisation of application
-- [<u><ins>Notebook</ins></u>](code/eda_model5c_all_images_grid.ipynb)
-
-
-## Unseen data on London map
-- The final challenge is to feed 1000 images (all unseen data) to go through the preprocessing and two layers of models
-- The result is plotted on the London map
-- It is encouraging to see period houses are concentrated in South Kensington (orange circle), and modern buildings are more common in Canary Wharf (blue circle)
-
-<img src="graphics/map.jpg" alt="map">
-Figure 12: London map - how period houses and modern buildings are distributed
-
-
-## Conclusion
-A feasible and reliable process and modelling has been established to accurately classify period vs modern buildings
-With a divide-and-conquer approach, two layers of model were able to learn to classify two set of features
-Potential commercial applications in areas of property tech:
-- Property Search Engine
-- Property Recommender System
-- Property Investment Evaluator
-There is room for future development to fine tuning the model and aggregating the model outputs with other data currently available
-
-
-
-## Datafile dictionary
-
-/data/images_train_val.csv
-
-####
-| Field | Description |
-|----------|------------------------------------------|
-| index | index of the image in the record |
-| image_link | full link of image |
-| hash | hash value from Average Hash algorithm converted to string |
-| repeated | 1 denotes the first occurence of hash value; any values >1 refer to duplicated values |
-| ext | 1 denotes "exterior" images, 0 denotes "interior" images |
-| new | 1 denotes "modern/new" building, 0 denotes "period/old" buildings  |
-
-
-
-## Folder Organization
-
-    |__ code/
-    |   |__ eda_model5c_all_images_grid.ipynb   
-    |   |__ eda_model7d.ipynb
-    |__ colab/
-    |   |__ vgg16c.ipynb   
-    |__ common/
-    |   |__ myfunctions.py
-    |__ images/
-    |   |__ predict_samples/
-    |   |__ modern_exterior/
-    |   |__ modern_samples/
-    |   |__ old_more/
-    |   |__ old_interior/
-    |__ images/
-    |   |__ myfunctions.py  
-    |__ data
-    |   |__ images_train_val.csv
-    |__ graphics/	
-    |__ README.md
-	
