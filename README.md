@@ -52,12 +52,21 @@ Using the function "describe" and sort by values in various fields to get a sens
 - Possible explanation based on public sources: contracts between states with SAT/ACT to provide the one of the tests to students; majority of students take one test only
 - Used the library Plotly to do a choropleth map - SAT is dominant in coastal areas
 
+<img src="images/Picture1.jpg" alt="map" width="60%">
+
+Figure 1: SAT participation by State
+
+
+
 #### Other Fields
 - Another important fields, among others, are students overall scores, ie SAT Total or ACT Composite
 - When analysing the distribution of SAT Total / ACT Composite, two normal distributions are noticed
 - Scatter plot of scores vs participation rates show that there seem to be two subsets of data due to higher and lower participation. The same patterns are seen across SAT/ACT, overall scores and subject scores, in 2017 and 2018
 - One interesting relationship is found - overall scores vs participation rate - a strong negative correlation ie lower overall scores for higher participation rates
 - Possible explanation based on public sources: only stronger students will take an additional test on top of the requirement/provision by the state
+
+
+
 
 ---
 
